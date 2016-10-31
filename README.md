@@ -80,25 +80,28 @@ graphql(schema, `{ input(value: "test") @duplicate(by:2) }`)
 ### Options
 ```javascript
 GraphQLCustomDirective({
-    // name to be use in placing the directive [*required]
-    name: String = 'test',
+    // name to be used in placing the directive (e.g @duplicate) [*required]
+    name: String = 'duplicate',
     
     // explain of the usage of the directive
-    description: String = 'test',
+    description: String = 'duplicate the string sperating them with space',
     
     // areas in the query you can place the directive [*required]
     locations: [String] = [ DirectiveLocation.FIELD ],
     
-    // object of passed variables from directive to resolve method
-    args: Object = { as: { type: GraphQLInt, description: "foo bar" } } ),
+    // object of passed variables from directive to the resolve method
+    args: Object = { by: { type: GraphQLInt, description: "foo bar" } } ),
     
-    // method the hook the execution and transform the input to a new output  [*required]
+    // method that hooks the execution and transforms the input to a new output [*required]
     // arguments:
-    // 1. resolve - a field promise that will result the output.
-    // 2. args - a object of directive arguments defined in query exectution 
-    // 3. source - a parent object of execution field result
-    // 4. info - a collection of information about the current execution state
-    resolve: Function = (resolve, arg, source, info) => resolve.then(input => input);
+    // 1. resolve - a field promise that will result in the field's value 
+    //    (either the raw field or the previous directive output).
+    // 2. source - a parent object of execution field result.
+    // 3. args - a object of directive arguments defined in query exectution.
+    // 4. context - a value to pass as the context to the graphql() function from GraphQL.js.
+    // 5. info - a collection of information about the current execution state.
+    resolve: Function = (resolve, source, args, context, info) => 
+                        { return resolve.then(input => input); }
 })
 
 ```
