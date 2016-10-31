@@ -24,7 +24,7 @@ describe('GraphQLCustomDirective', () => {
                     description: 'the times to duplicate the string'
                 }
             },
-            resolve: function(resolve, { by }) {
+            resolve: function(resolve, source, { by }) {
                 return resolve().then(result => {
 
                     if (!result) {
