@@ -9,8 +9,8 @@ const DEFAULT_DIRECTIVES = ['skip', 'include'];
  * and returns it as the result, or if it's a function, returns the result
  * of calling that function.
  */
-function defaultResolveFn(source, args, context, _ref) {
-    var fieldName = _ref.fieldName;
+function defaultResolveFn(source, args, context, info) {
+    var fieldName = info.fieldName;
     // ensure source is a value for which property access is acceptable.
     if (typeof source === 'object' || typeof source === 'function') {
         return typeof source[fieldName] === 'function' ? source[fieldName]() : source[fieldName];
@@ -20,7 +20,7 @@ function defaultResolveFn(source, args, context, _ref) {
 /**
  * resolving field using directive resolver
  */
-const resolveWithDirective = function(source, info, directive, resolve) {
+const resolveWithDirective = function(resolve, source, directive, context, info) {
     let directiveConfig = info.schema._directives.filter(d => directive.name.value === d.name)[0];
 
     let args = {};
@@ -29,7 +29,7 @@ const resolveWithDirective = function(source, info, directive, resolve) {
         args[arg.name.value] = arg.value.value;
     }
 
-    return directiveConfig.resolve(resolve, args, source, info);
+    return directiveConfig.resolve(resolve, source, args, context, info);
 };
 
 /**
@@ -46,14 +46,14 @@ const resolveMiddlewareWrapper = function(resolve = defaultResolveFn) {
             return resolve(source, args, context, info);
         }
 
-        let defer = resolveWithDirective(source, info, directive, () => Promise.resolve(resolve(source, args, context, info)));
+        let defer = resolveWithDirective(() => Promise.resolve(resolve(source, args, context, info)), source, directive, context, info);
 
         if (directives.length <= 1) {
             return defer;
         }
 
         for (let directiveNext of directives.slice(1)) {
-            defer = defer.then(result => resolveWithDirective(source, info, directiveNext, () => Promise.resolve(result)));
+            defer = defer.then(result => resolveWithDirective(() => Promise.resolve(result), source, directiveNext, context, info));
         }
 
         return defer;
