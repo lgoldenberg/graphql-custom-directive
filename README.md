@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/lirown/graphql-custom-directive/badge.svg?branch=master)](https://coveralls.io/github/lirown/graphql-custom-directive?branch=master)
 [![npm version](https://badge.fury.io/js/graphql-custom-directive.svg)](https://badge.fury.io/js/graphql-custom-directive)
 [![Dependency Status](https://david-dm.org/lirown/graphql-custom-directive.svg)](https://david-dm.org/lirown/graphql-custom-directive)
-[![Known Vulnerabilities](https://snyk.io/test/github/lirown/graphql-custom-directive/602d182992f808e0851a88fb5b63021570c4f4eb/badge.svg)](https://snyk.io/test/github/lirown/graphql-custom-directive/602d182992f808e0851a88fb5b63021570c4f4eb)
+[![Known Vulnerabilities](https://snyk.io/test/github/lirown/graphql-custom-directive/badge.svg)](https://snyk.io/test/github/lirown/graphql-custom-directive)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 A custom directive for GraphQL with the ability to hook the query execution.
