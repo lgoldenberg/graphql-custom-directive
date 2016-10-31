@@ -1,6 +1,6 @@
 {
   "name": "graphql-custom-directive",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A custom directive for GraphQL with the ability to hook the query execution",
   "main": "dist/index.js",
   "scripts": {
