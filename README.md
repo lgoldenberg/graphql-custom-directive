@@ -33,7 +33,7 @@ const GraphQLCustomTestDirective = new GraphQLCustomDirective({
             description: 'the times to duplicate the string'
         }
     },
-    resolve: function(resolve, { by }, source, info) {
+    resolve: function(resolve, source, { by }, context, info) {
         return resolve().then(result => {      
             let times = [];
             
@@ -46,24 +46,26 @@ const GraphQLCustomTestDirective = new GraphQLCustomDirective({
     }
 })
 
+const query = new GraphQLObjectType({
+   name: 'Query',
+   fields: {
+       input: {
+           type: GraphQLString,
+           args: {
+               value: {
+                   type: GraphQLString
+               }
+           },
+           resolve: (source, {value}) => value
+       }
+   }
+});
+
 const schema = new GraphQLSchema({
     directives: [
         GraphQLCustomTestDirective
     ],
-    query: new GraphQLObjectType({
-       name: 'Query',
-       fields: {
-           input: {
-               type: GraphQLString,
-               args: {
-                   value: {
-                       type: GraphQLString
-                   }
-               },
-               resolve: (source, {value}) => value
-           }
-       }
-   })
+    query
 });
 
 applySchemaCustomDirectives(schema);
