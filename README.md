@@ -92,13 +92,13 @@ GraphQLCustomDirective({
     // object of passed variables from directive to the resolve method
     args: Object = { by: { type: GraphQLInt, description: "foo bar" } } ),
     
-    // method that hooks the execution and transforms the input to a new output [*required]
+    // method that hooks the execution and transforms the input to a new output
     // arguments:
     // 1. resolve - a field promise that will result in the field's value 
     //    (either the raw field or the previous directive output).
     // 2. source - a parent object of execution field result.
     // 3. args - a object of directive arguments defined in query exectution.
-    // 4. context - a value to pass as the context to the graphql() function from GraphQL.js.
+    // 4. context - a value to pass as the context to the graphql() function.
     // 5. info - a collection of information about the current execution state.
     resolve: Function = (resolve, source, args, context, info) => 
                         { return resolve.then(input => input); }
